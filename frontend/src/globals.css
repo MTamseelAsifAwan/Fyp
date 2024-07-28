@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+ 
+.li-items{
+  @apply hover:text-purple-900 hover:underline hover:text-lg hover:font-bold  ;
+}
+
+
+}
