@@ -1,16 +1,40 @@
-import React from 'react';
 import { FaCheckCircle } from 'react-icons/fa'; // Import the check circle icon from react-icons/fa
+import { motion } from 'framer-motion';
+import wave from '../assets/wave2.svg'
 
 const Pricing = () => {
+  const upToDown = {
+    hidden: { opacity: 0, y: -50 },  // Start off-screen above
+    visible: { opacity: 1, y: 0 },    // Move to its final position
+  };
+
+  const downToUp = {
+    hidden: { opacity: 0, y: 50 },   // Start off-screen below
+    visible: { opacity: 1, y: 0 },    // Move to its final position
+  };
   return (
-    <section className="w-auto ml-4 py-4 shadow-2xl rounded-xl grid justify-center items-center ">
+    <div className="relative">
+      {/* Background Image with Opacity Overlay */}
+      <div
+        className="absolute inset-0 bg-cover bg-center opacity-100"
+        style={{ backgroundImage: `url(${wave})` }}
+      />
+      <div className="absolute inset-0  opacity-90" />
+    <section className="w-auto ml-4 py-4 shadow-boxy rounded-xl grid justify-center items-center ">
       <div className="container mx-auto text-center">
-        <h2 className="block antialiased tracking-normal font-sans text-4xl font-semibold leading-[1.3] text-purple-900 mb-4">Pricing</h2>
+        <h2 className="block antialiased tracking-normal font-serif text-4xl font-bold leading-[1.3] text-purple-900 mb-4">Pricing</h2>
       </div>
       <div className="mt-10">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {/* Basic Meal Plan */}
-          <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-black shadow-md border border-blue-gray-100">
+          <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={downToUp}
+                transition={{ duration: 2 }}
+           className="relative flex flex-col bg-clip-border rounded-xl bg-white text-black shadow-md border border-blue-gray-100"
+              >
             <div className="relative bg-clip-border mt-4 mx-4 rounded-xl overflow-hidden bg-transparent text-black shadow-none !m-0 p-6">
               <h5 className="block antialiased tracking-normal font-sans text-xl font-bold leading-snug text-purple-900 capitalize">
                 Basic Plan
@@ -33,12 +57,19 @@ const Pricing = () => {
                 ))}
               </ul>
               
-              <button className="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-2 px-4 rounded-lg  hover:opacity-75 focus:ring focus:ring-green-200 active:opacity-[0.85] block w-full mt-6 border border-purple-900  text-purple-900 hover:bg-[#2b0f61] hover:text-white">Upgrade</button>
+              <button className="align-middle select-none font-sans hover:font-bold text-base  hover:bg-purple-950 hover:text-white text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none  py-2 px-4 rounded-lg  focus:ring focus:ring-green-200 active:opacity-[0.85] block w-full mt-6 border border-purple-900  text-purple-900 ">Upgrade</button>
 
             </div>
-          </div>
+          </motion.div>
           {/* Family Feast */}
-          <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-black shadow-md border border-blue-gray-100">
+          <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={upToDown}
+                transition={{ duration: 1 }}
+                className="relative flex flex-col bg-clip-border rounded-xl bg-white text-black shadow-md border border-blue-gray-100"             
+                 >
             <div className="relative bg-clip-border mt-4 mx-4 rounded-xl overflow-hidden bg-transparent text-black shadow-none !m-0 p-6">
               <h5 className="block antialiased tracking-normal font-sans text-xl font-bold leading-snug text-purple-900 capitalize">
 Pro Plan              </h5>
@@ -59,12 +90,19 @@ Pro Plan              </h5>
                   </li>
                 ))}
               </ul>
-              <button className="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-2 px-4 rounded-lg  border-green-500 text-green-500 hover:opacity-75 focus:ring focus:ring-green-200 active:opacity-[0.85] block w-full mt-6 border border-purple-900  text-purple-900 hover:bg-[#2b0f61] hover:text-white">Upgrade</button>
+              <button className="align-middle select-none font-sans hover:font-bold text-base  hover:bg-purple-950 hover:text-white text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none  py-2 px-4 rounded-lg  focus:ring focus:ring-green-200 active:opacity-[0.85] block w-full mt-6 border border-purple-900  text-purple-900 ">Upgrade</button>
 
             </div>
-          </div>
+          </motion.div>
           {/* Special Events */}
-          <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-black shadow-md border border-blue-gray-100">
+          <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={downToUp}
+                transition={{ duration: 1 }}
+                className="relative flex flex-col bg-clip-border rounded-xl bg-white text-black shadow-md border border-blue-gray-100"
+                                 >
             <div className="relative bg-clip-border mt-4 mx-4 rounded-xl overflow-hidden bg-transparent text-black shadow-none !m-0 p-6">
               <h5 className="block antialiased tracking-normal font-sans text-xl font-bold leading-snug text-purple-900 capitalize">
 Enterprise Plan              </h5>
@@ -85,13 +123,15 @@ Enterprise Plan              </h5>
                   </li>
                 ))}
               </ul>
-              <button className="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-2 px-4 rounded-lg  border-green-500 text-green-500 hover:opacity-75 focus:ring focus:ring-green-200 active:opacity-[0.85] block w-full mt-6 border border-purple-900  text-purple-900 hover:bg-[#2b0f61] hover:text-white">Upgrade</button>
+              <button className="align-middle select-none font-sans hover:font-bold text-base  hover:bg-purple-950 hover:text-white text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none  py-2 px-4 rounded-lg   focus:ring focus:ring-green-200 active:opacity-[0.85] block w-full mt-6 border border-purple-900  text-purple-900 ">Upgrade</button>
 
             </div>
-          </div>
+          
+          </motion.div>
         </div>
       </div>
     </section>
+    </div>
   );
 };
 

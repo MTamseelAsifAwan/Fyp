@@ -19,7 +19,11 @@ export default {
       // => @media (min-width: 1280px) { ... }
 
       '2xl': '1536px',
-    }
+    },
+    boxShadow: {
+      '2xl-custom': '0 35px 60px -5px rgb(0 0 0 / 0.25)',  // Custom shadow definition
+    },
+
   },
   plugins: [],
 }

@@ -2,3 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+.body {
+    background-image: url('./assets/wave.svg'); /* Update the path to your SVG */
+    background-size: cover; /* Adjust as needed */
+    background-repeat: no-repeat;
+    background-position: center;
+}

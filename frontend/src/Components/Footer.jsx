@@ -1,234 +1,22 @@
-import './App.css'
-import  { useRef, useEffect } from 'react';
+import React from 'react'
 import { motion } from 'framer-motion';
-import Col from 'react-bootstrap/Col';
-import Pricing from './Components/Pricing';
 import { FaTicketAlt, FaRobot, FaUsers,FaPaperPlane  } from 'react-icons/fa';
-import taskdetails from './assets/Task Details.png'
-import { gsap } from 'gsap';
-import ScrollTrigger from 'gsap/ScrollTrigger';
-import wave from './assets/wave.svg'
-import wave2 from './assets/wave2.svg'
-import wave3 from './assets/wave3.svg'
 
-
-const App = () => {
-  const mainbtnRef = useRef(null);
-  const signbtnRef = useRef(null);
-
-  useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Zoom in and out effect for mainbtnRef
-    gsap.fromTo(mainbtnRef.current,
-      { scale: 1 },
-      {
-        scale: 1.2, // Zoom in to 120%
-        duration: 4.5, // Duration of the zoom effect
-        repeat: -1, // Repeat indefinitely
-        yoyo: true, // Make the effect go back and forth
-        ease: 'power1.inOut',
-        scrollTrigger: {
-          trigger: mainbtnRef.current,
-          start: 'top 80%',
-          end: 'bottom top',
-          scrub: true,
-        }
-      }
-    );
-
-    // Zoom in and out effect for signbtnRef
-    gsap.fromTo(signbtnRef.current,
-      { scale: 1 },
-      {
-        scale: 1.1, // Zoom in to 110%
-        duration: 4.5, // Longer duration for a smoother effect
-        repeat: -1, // Repeat indefinitely
-        yoyo: true, // Make the effect go back and forth
-        ease: 'power1.inOut',
-        scrollTrigger: {
-          trigger: signbtnRef.current,
-          start: 'top 100%',
-          end: 'bottom top',
-          scrub: true,
-        }
-      }
-    );
-  }, []);
-
-  const floatInFromLeft = {
-    hidden: { opacity: 0, x: -30 },
-    visible: { opacity: 1, x: 0 },
-  };
-
-  const floatInFromRight = {
-    hidden: { opacity: 0, x: 1 },
-    visible: { opacity: 1, x: 0 },
-  };
-
-  const downToUp = {
+const downToUp = {
     hidden: { opacity: 0, y: 5 },   // Start off-screen below
     visible: { opacity: 1, y: 0 },    // Move to its final position
   };
+ const Footer = () => {
   return (
     <>
-   
-      
-      <div className='bg-white'>
-     
-   <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true }}
-      variants={floatInFromLeft}
-      transition={{ duration: 2 }}
-      className="font-serif justify-center grid grid-cols-1 items-center text-center flex-col sm:px-4 md:px-8 lg:px-12 bg-cover bg-center"
-      style={{ backgroundImage: `url(${wave})` }}
-    >
-      <div className="shadow-boxy2 p-5 rounded-2xl bg-white bg-opacity-20">
-        <div>
-          <h1 className="text-purple-900 font-bold flex justify-center mt-[1rem] text-4xl sm:text-2xl md:text-3xl lg:text-4xl">Welcome</h1>
-          <div className="flex justify-center">
-            <p className="text-black_color font-bold flex justify-center items-center text-center text-xl sm:text-base md:text-xl lg:text-2xl">
-              Great outcomes start with
-            </p>
-          </div>
-          <div className="flex justify-center">
-            <p className="font-serif text-black_color font-extrabold justify-center text-center text-xl sm:text-base md:text-xl lg:text-2xl">Sprinty</p>
-          </div>
-          <div className="flex justify-center">
-            <p className="text-black_color font-bold flex justify-center mt-4 mb-4 text-base text-center sm:text-sm md:text-base lg:text-xl">
-              Project management tool you need to plan and track work across every team.
-            </p>
-          </div>
-          <div className="flex justify-center mt-6">
-            <button ref={mainbtnRef} className="bg-purple-900 py-2 px-4 rounded-lg text-white hover:font-bold hover:bg-purple-950 hover:text-white">
-              Get Started
-            </button>
-          </div>
-        </div>
-      </div>
-    </motion.div>
-      
-      {/* features */}
-    
-      <div className='grid justify-center items-center grid-cols-1 grid-flow-col mt-14 '>
-        <h3 className='text-purple-900 font-serif text-center font-bold text-3xl'>Features That meet your need</h3>
+      <footer className='bg-black lg:h-40 sm:mt-10 lg:pt-3 sm:h-80 sm:w-80 md:w-full font-serif '>
         
-      </div>
-     
-      <div className="relative">
-      {/* Background Image with Opacity Overlay */}
-      <div
-        className="absolute inset-0 bg-cover bg-center opacity-100"
-        style={{ backgroundImage: `url(${wave3})` }}
-      />
-      <div className="absolute inset-0  opacity-90" />
-
-      {/* Feature Cards */}
-      <div className="relative grid grid-cols-1 sm:grid-cols-2 gap-6 p-4 md:p-8 lg:p-12">
-        {[
-          { title: "Your Data", description: "Easily manage and access your data in one place" },
-          { title: "Secure", description: "Top-notch security features to protect your data." },
-          { title: "Customization", description: "Tailor the platform to fit your specific workflow and needs" },
-          { title: "Issue Tracking", description: "Easily track all the issues and workflows of your project." },
-          { title: "Team Collaboration", description: "Collaborate with your team easily and efficiently" },
-          { title: "Reports and Analytics", description: "Get detailed reports and analytics of your project." },
-        ].map((feature, index) => (
-          <motion.div
-            key={index}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={floatInFromRight}
-            transition={{ duration: 1 }}
-            className="shadow-lg rounded-xl p-4 bg-white bg-opacity-80"
-          >
-            <h2 className="text-xl font-bold mb-2">{feature.title}</h2>
-            <p>{feature.description}</p>
-          </motion.div>
-        ))}
-      </div>
-    </div>
-
-          {/* features2 */}
-          <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={floatInFromRight}
-                transition={{ duration: 1 }}
-                className='grid grid-cols-1 mt-14 pr-28 pl-10 sm:pl-20 sm:pr-28 gap-4'
-              >
-<FaTicketAlt className="text-3xl text-purple-900 mb-[-1rem]" />
-  <p className='w-40 font-serif '>Create task easily</p>
-  <FaRobot className=' text-3xl text-purple-900 ml-24 mb-[-1rem]'/>
-  <p className='flex justify-center text-center font-serif  w-96'>Fully coustomize workflows</p>
-  <FaUsers className=' text-3xl text-button text-purple-900 ml-[11.5rem] mb-[-1rem] '/>
-  <p className='flex justify-end text-end w-96 font-serif '> Seamless team collaboration</p>
-
-
-</motion.div>
-<br/>
-<br/>
-<Pricing/>
-
-<motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={floatInFromLeft}
-                transition={{ duration: 1 }}
-                className='mt-12 p-6 ml-10 grid grid-flow-row justify-center text-center grid-rows-3'
-              >
-  <h1 className='text-purple-900 font-bold sm:text-base md:text-xl lg:text-2xl font-serif '>Ready to get started?</h1>
-  <p className='font-serif '>Discover the benefits of Sprinty today and start planning and managing your projects.</p>
-  <button ref={signbtnRef} className="bg-purple-900 border  text-white border-none rounded-md grid w-24 hover:font-bold hover:bg-purple-950 hover:text-white items-center justify-center lg:ml-64 lg:mt-2 sm:ml-[14rem] md:ml-[16rem] text-danger_light font-sans">Sign in</button>
-  </motion.div>
- 
- {/* About us */}
- <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true }}
-      variants={floatInFromRight}
-      transition={{ duration: 1 }}
-     
-    
-                className='grid grid-cols-1 grid-flow-row  rounded-2xl p-2 mb-12 ml-3 shadow-boxy'
-              >
- <div className='about-us-section mt-1  ml-10 font-bold grid grid-flow-row justify-center text-center '>
-              <h1 className='text-purple-900 sm:text-base md:text-xl lg:text-2xl sm:mb[-6rem] font-serif'>About Us</h1>
-              <p className='text-black font-serif sm:text-sm md:text-sm lg:text-base  '>
-                Sprinty is a leading project management tool designed to help teams plan, track, and manage their projects effortlessly. Our mission is to provide a seamless and efficient platform for teams to collaborate, stay organized, and achieve their project goals. With a focus on customization, security, and ease of use, Sprinty ensures that your team can work together effectively, no matter the project size or complexity.
-              </p>
-             
-
-              <a className='text-purple-900 underline'href="codewolf@gmail.com">codewolf@gmail.com</a>
-              <div className='sm:mr[-39rem]'>
-              <img src={taskdetails} alt="task details" className='lg:w-[48rem] lg:h-[38rem] md:w-[56rem] md:h-[34rem] rounded-xl  sm:w-[30rem] grid justify-center items-center lg:ml-72 ' />
-            </div>
-            </div>
-           
-            
-            </motion.div>
-         
-      
-            </div>  
-     
-      {/* footer */}
-      <footer className='bg-black lg:h-56 lg:pt-3 sm:h-60 sm:w-64 md:w-full font-serif '>
-        <h1 className='text-white font-bold text-lg text-center'>Subscribe to our Newsletter</h1>
-        <div className='flex justify-center '>
-          <input type="text" placeholder='Your Email Address' className='p-1 rounded-md b  text-center' />
-          <button className='bg-purple-900 text-white font-bold py-2 px-2 rounded-md hover:bg-purple-950'><FaPaperPlane className='text-sm' /></button>
-        </div>
         <div className='p-6 font-bold text-3xl border-b border-warning_light'>
         <h1 className=' text-purple-900 ' >
           Sprity
         </h1>
         </div>
-  <div className='grid grid-flow-col mt-4 align-text-bottom '>
+  <div className='grid grid-flow-col mt-2 align-text-bottom '>
   <p className='text-center text-white font-bold text-sm '>Copyright © 2024 Sprinty. All rights reserved.</p>
   
   <motion.div
@@ -346,9 +134,7 @@ const App = () => {
   </div>
     
   </footer>
-    
     </>
   )
 }
-
-export default App
+export default Footer;
