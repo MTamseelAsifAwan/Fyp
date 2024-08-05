@@ -76,14 +76,17 @@ const App = () => {
       
       <div className='bg-white'>
      
-   <motion.div
+   
+      <div       className="font-serif justify-center grid grid-cols-1 items-center text-center flex-col sm:px-4 md:px-8 lg:px-12 bg-cover bg-center"
+            style={{ backgroundImage: `url(${wave})` }}
+
+      >
+        <motion.div
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true }}
       variants={floatInFromLeft}
       transition={{ duration: 2 }}
-      className="font-serif justify-center grid grid-cols-1 items-center text-center flex-col sm:px-4 md:px-8 lg:px-12 bg-cover bg-center"
-      style={{ backgroundImage: `url(${wave})` }}
     >
       <div className="shadow-boxy2 p-5 rounded-2xl bg-white bg-opacity-20">
         <div>
@@ -97,7 +100,7 @@ const App = () => {
             <p className="font-serif text-black_color font-extrabold justify-center text-center text-xl sm:text-base md:text-xl lg:text-2xl">Sprinty</p>
           </div>
           <div className="flex justify-center">
-            <p className="text-black_color font-bold flex justify-center mt-4 mb-4 text-base text-center sm:text-sm md:text-base lg:text-xl">
+            <p className="text-black_color font-bold flex justify-center mt-4 mb-5 text-base text-center sm:text-sm md:text-base lg:text-xl">
               Project management tool you need to plan and track work across every team.
             </p>
           </div>
@@ -108,7 +111,8 @@ const App = () => {
           </div>
         </div>
       </div>
-    </motion.div>
+      </motion.div>
+      </div>
       
       {/* features */}
     
