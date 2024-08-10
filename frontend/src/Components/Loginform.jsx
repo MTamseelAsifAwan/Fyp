@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import wave from '../assets/wave.svg';
 import formside from '../assets/formside.png';
@@ -6,58 +6,65 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import the CSS for Toastify
 import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import GoogleIcon from '../assets/google.svg'; // Example path
+import Navbar2 from './Navbar2';
 
 const Loginform = () => {
+  const [loading, setLoading] = useState(false); // Loading state
   const navigate = useNavigate();
-  const auth = getAuth(); // Initialize Firebase Authentication instance
+  const auth = getAuth();
 
   const handleLogin = async (e) => {
-    e.preventDefault(); // Prevent the default form submission behavior
-    try {
-      const email = e.target.elements.email.value; // Get the email input value
-      const password = e.target.elements.password.value; // Get the password input value
+    e.preventDefault();
+    setLoading(true); // Set loading to true when login starts
 
-      // Sign in with email and password
+    try {
+      const email = e.target.elements.email.value;
+      const password = e.target.elements.password.value;
+
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      
       toast.success('Login successful!');
-      navigate('/dashboard'); 
+      navigate('/dashboard');
       console.log(userCredential);
 
     } catch (error) {
-      toast.error(`Error: ${error.message}`);
-      console.error('Error code:', error.code);
-      console.error('Error message:', error.message);
+      if (error.code === 'auth/network-request-failed') {
+        toast.error('Network request failed. Please check your internet connection.');
+      } else {
+        toast.error(`Error: ${error.message}`);
+        console.error('Error code:', error.code);
+        console.error('Error message:', error.message);
+      }
+    } finally {
+      setLoading(false); // Set loading to false after login completes
     }
   };
 
   const handleGoogleLogin = async () => {
     const provider = new GoogleAuthProvider();
+    setLoading(true); // Set loading to true when login starts
+
     try {
-      // Sign in with Google
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
       console.log('Google user:', user);
 
       toast.success('Logged in with Google successfully!');
-      navigate('/dashboard'); // Navigate to the dashboard page
+      navigate('/dashboard');
     } catch (error) {
       toast.error(`Error: ${error.message}`);
       console.error('Error code:', error.code);
       console.error('Error message:', error.message);
+    } finally {
+      setLoading(false); // Set loading to false after login completes
     }
   };
 
   return (
     <>
-      <div className="relative">
-        {/* Background Image with Opacity Overlay */}
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-70"
-          style={{ backgroundImage: `url(${wave})` }}
-        />
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 bg-gray-50 w-screen h-screen">
+      <Navbar2 />
+      <div className="relative bg-[#f4f7fd]">
+        <div className="absolute inset-0 bg-cover bg-center opacity-70" style={{ backgroundImage: `url(${wave})` }} />
+        <div className="grid grid-cols-1 sm:grid-cols-2 bg-[#f4f7fd] w-screen h-screen">
           <div className="hidden sm:block">
             <img src={formside} alt="Form side image" className="object-cover w-full h-full" />
           </div>
@@ -71,9 +78,10 @@ const Loginform = () => {
                   <input
                     type="email"
                     className="border rounded-lg px-3 py-2 text-sm w-full"
-                    name="email" // Use name instead of id
+                    name="email"
                     placeholder="Enter email"
                     required
+                    disabled={loading} // Disable input during loading
                   />
                 </div>
                 <div>
@@ -81,9 +89,10 @@ const Loginform = () => {
                   <input
                     type="password"
                     className="border rounded-lg px-3 py-2 text-sm w-full"
-                    name="password" // Use name instead of id
+                    name="password"
                     placeholder="Enter password"
                     required
+                    disabled={loading} // Disable input during loading
                   />
                 </div>
               </div>
@@ -91,8 +100,9 @@ const Loginform = () => {
                 <button
                   className="py-2 px-4 bg-purple-900 hover:bg-purple-950 focus:ring-purple-900 text-white w-full transition ease-in duration-200 text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
                   type="submit"
+                  disabled={loading} // Disable button during loading
                 >
-                  Log in
+                  {loading ? 'Logging in...' : 'Log in'} {/* Show loading text */}
                 </button>
               </div>
               <div className="mt-4">
@@ -100,16 +110,21 @@ const Loginform = () => {
                   className="flex items-center justify-center py-2 px-4 bg-gray-200 hover:bg-gray-300 text-black w-full transition ease-in duration-200 text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
                   type="button"
                   onClick={handleGoogleLogin}
+                  disabled={loading} // Disable button during loading
                 >
-                  <img src={GoogleIcon} alt="Google icon" className="w-5 h-5" />
-                  <span className="ml-2">Log in with Google</span>
+                  {loading ? 'Please wait...' : (
+                    <>
+                      <img src={GoogleIcon} alt="Google icon" className="w-5 h-5" />
+                      <span className="ml-2">Log in with Google</span>
+                    </>
+                  )}
                 </button>
               </div>
             </form>
           </div>
         </div>
       </div>
-      <ToastContainer /> {/* ToastContainer for displaying toast notifications */}
+      <ToastContainer />
     </>
   );
 };

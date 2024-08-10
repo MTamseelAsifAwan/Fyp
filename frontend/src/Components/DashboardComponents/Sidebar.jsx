@@ -1,49 +1,56 @@
-import { useContext, createContext, useState } from "react"
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { auth } from '../../Auth/Firebase.jsx'; // Adjust the import path to your Firebase config
+import { signOut, onAuthStateChanged } from 'firebase/auth';
 
-const SidebarContext = createContext()
-
- function Sidebar({ children }) {
-  const [expanded, setExpanded] = useState(true)
-  
+const Sidebar = ({ onSelect, activeSection }) => {
+  const navigate= useNavigate();
+  const handleSignOut = () => {
+    signOut(auth)
+      .then(() => {
+        console.log('User signed out');
+        navigate('/login'); // Redirect to the login page after sign out
+      })
+      .catch((error) => {
+        console.error('Error signing out: ', error);
+      });
+  };
   return (
-    <aside className="h-screen">
-      <nav className="h-full flex flex-col bg-white border-r shadow-sm">
-        <div className="p-4 pb-2 flex justify-between items-center">
-          
-          <button
-            onClick={() => setExpanded((curr) => !curr)}
-            className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100"
-          >
-            {expanded ? <ChevronFirst /> : <ChevronLast />}
-          </button>
-        </div>
+    <div className="sidebar relative bg-white text-black pt-4 pr-[-2rem] shadow-2xl flex flex-col justify-between" style={{ width: '202px', height: '92vh' }}>
+      <ul className="space-y-6 text-black font-serif font-semibold">
+        <li
+          onClick={() => onSelect('dashboard')}
+          className={`flex items-baseline space-x-2 px-5 mr-8 rounded-r-full duration-500 ease-in-out py-4 cursor-pointer ${
+            activeSection === 'dashboard'
+              ? 'bg-purple-900 text-white'
+              : 'hover:bg-slate-200 hover:text-purple-950'
+          }`}
+        >
+          Dashboard
+        </li>
+        <li
+          onClick={() => onSelect('marketing')}
+          className={`flex items-baseline space-x-2 px-5 mr-8 rounded-r-full duration-500 ease-in-out py-4 cursor-pointer ${
+            activeSection === 'marketing'
+              ? 'bg-purple-900 text-white'
+              : 'hover:bg-slate-200 hover:text-purple-950'
+          }`}
+        >
+          Marketing
+        </li>
 
-        <SidebarContext.Provider value={{ expanded }}>
-          <ul className="flex-1 px-3">{children}</ul>
-        </SidebarContext.Provider>
+        {/* Add more items as needed */}
+      </ul>
 
-        <div className="border-t flex p-3">
-          <img
-            src="https://ui-avatars.com/api/?background=c7d2fe&color=3730a3&bold=true"
-            alt=""
-            className="w-10 h-10 rounded-md"
-          />
-          <div
-            className={`
-              flex justify-between items-center
-              overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}
-          `}
-          >
-            <div className="leading-4">
-              <h4 className="font-semibold">John Doe</h4>
-              <span className="text-xs text-gray-600">johndoe@gmail.com</span>
-            </div>
-            <MoreVertical size={20} />
-          </div>
-        </div>
-      </nav>
-    </aside>
-  )
-}
+      {/* Sign Out Button */}
+      <li
+        onClick={handleSignOut}
+        className="flex text-base font-serif items-baseline space-x-2 pl-11 mr-8 rounded-full text-center duration-500 ease-in-out py-4 cursor-pointer  bg-purple-950 text-white hover:bg-red-600"
+      >
+        Sign Out
+      </li>
+    </div>
+  );
+};
 
 export default Sidebar;

@@ -4,7 +4,7 @@ import Logo from '../assets/logo1-unscreen.gif';
 import { useNavigate } from 'react-router-dom';
 
 
-const Navbar = ({ scrollToSection }) => {
+const Navbar2 = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -18,6 +18,9 @@ const Navbar = ({ scrollToSection }) => {
   };
   const handleLogin = () => {
     navigate('/login');
+  };
+  const handleHome = () => {
+   navigate('/');
   };
 
 
@@ -35,17 +38,9 @@ const Navbar = ({ scrollToSection }) => {
           >
             <ul className="flex items-center justify-center ml-14 md:flex-row flex-col md:items-center md:gap-[4vw] sm:items-center gap-8">
               <li>
-                <a className="li-items font-serifc cursor-pointer " onClick={() => scrollToSection('Home')}>Home</a>
+                <a className="li-items font-serifc cursor-pointer " onClick={handleHome}>Home</a>
               </li>
-              <li>
-                <a className="li-items font-serifc cursor-pointer " onClick={() => scrollToSection('Feature')}>Features</a>
-              </li>
-              <li>
-                <a className="li-items font-serifc cursor-pointer " onClick={() => scrollToSection('Pricing')}>Pricing</a>
-              </li>
-              <li>
-                <a className="li-items font-serifc cursor-pointer "onClick={() => scrollToSection('About')}>About Us</a>
-              </li>
+            
               <li>
                 {menuOpen && (
                   <div className="flex justify-center flex-row items-center gap-4">
@@ -71,4 +66,4 @@ const Navbar = ({ scrollToSection }) => {
   );
 };
 
-export default Navbar;
+export default Navbar2;

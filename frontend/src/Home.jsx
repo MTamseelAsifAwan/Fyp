@@ -1,16 +1,38 @@
-import React from 'react'
-import Navbar from './Components/Navbar'
-import App from './App'
+import React, { useRef } from 'react';
+import Navbar from './Components/Navbar';
+import App from './App';
 
- const Home = () => {
+const Home = () => {
+  // Define refs for each section
+  const Homeref = useRef(null);
+  const Featuresref = useRef(null);
+  const Pricingref = useRef(null);
+  const Aboutusref = useRef(null);
+
+  // Function to scroll to a specific section
+  const scrollToSection = (section) => {
+    if (section === 'Home') {
+      Homeref.current.scrollIntoView({ behavior: 'smooth' });
+    } else if (section === 'Feature') {
+      Featuresref.current.scrollIntoView({ behavior: 'smooth' });
+    } else if (section === 'Pricing') {
+      Pricingref.current.scrollIntoView({ behavior: 'smooth' });
+    } else if (section === 'About') {
+      Aboutusref.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
- <>
- <Navbar />
- <br/>
- <br/>
-    <App />
-   
- </>
-  )
-}
-export default Home
+    <div>
+      <Navbar scrollToSection={scrollToSection} />  {/* Pass scrollToSection to Navbar */}
+      <App
+        Homeref={Homeref}
+        Featuresref={Featuresref}
+        Pricingref={Pricingref}
+        Aboutusref={Aboutusref}
+      />
+    </div>
+  );
+};
+
+export default Home;

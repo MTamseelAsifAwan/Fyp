@@ -1,5 +1,5 @@
 import './App.css'
-import  { useRef, useEffect } from 'react';
+import  { useRef, useEffect,ref } from 'react';
 import { motion } from 'framer-motion';
 import Col from 'react-bootstrap/Col';
 import Pricing from './Components/Pricing';
@@ -12,7 +12,7 @@ import wave2 from './assets/wave2.svg'
 import wave3 from './assets/wave3.svg'
 
 
-const App = () => {
+const App = ({Homeref,Featuresref,Pricingref,Aboutusref}) => {
   const mainbtnRef = useRef(null);
   const signbtnRef = useRef(null);
 
@@ -54,39 +54,70 @@ const App = () => {
         }
       }
     );
+      // Float in from left animation
+      gsap.fromTo('.float-in-left', 
+        { opacity: 0, x: -30 }, 
+        {
+          opacity: 1, 
+          x: 0,
+          scrollTrigger: {
+            trigger: '.float-in-left',
+            start: 'top 80%', // Start the animation when the top of the element reaches 80% of the viewport height
+            end: 'bottom 60%', // End when the bottom of the element reaches 60% of the viewport height
+            scrub: 1, // Smooth animation
+          },
+        }
+      );
+  
+      // Float in from right animation
+      gsap.fromTo('.float-in-right', 
+        { opacity: 0, x: 30 }, 
+        {
+          opacity: 1, 
+          x: 0,
+          scrollTrigger: {
+            trigger: '.float-in-right',
+            start: 'top 80%',
+            end: 'bottom 60%',
+            scrub: 1,
+          },
+        }
+      );
+  
+      // Down to up animation
+      gsap.fromTo('.down-to-up', 
+        { opacity: 0, y: 5 }, 
+        {
+          opacity: 1, 
+          y: 0,
+          scrollTrigger: {
+            trigger: '.down-to-up',
+            start: 'top 80%',
+            end: 'bottom 60%',
+            scrub: 1,
+          },
+        }
+      );
+    
   }, []);
-
-  const floatInFromLeft = {
-    hidden: { opacity: 0, x: -30 },
-    visible: { opacity: 1, x: 0 },
-  };
-
-  const floatInFromRight = {
-    hidden: { opacity: 0, x: 1 },
-    visible: { opacity: 1, x: 0 },
-  };
 
   const downToUp = {
     hidden: { opacity: 0, y: 5 },   // Start off-screen below
     visible: { opacity: 1, y: 0 },    // Move to its final position
-  };
+  }; 
   return (
     <>
    
       
-      <div className='bg-white'>
+      <div className='bg-[#f4f7fd] pt-20'>
      
    
-      <div       className="font-serif justify-center grid grid-cols-1 items-center text-center flex-col sm:px-4 md:px-8 lg:px-12 bg-cover bg-center"
+      <div   ref={Homeref} id='Home'   className="font-serif justify-center grid grid-cols-1 items-center text-center flex-col sm:px-4 md:px-8 lg:px-12 bg-cover bg-center"
             style={{ backgroundImage: `url(${wave})` }}
 
       >
-        <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true }}
-      variants={floatInFromLeft}
-      transition={{ duration: 2 }}
+        <div
+    className='float-in-right'
     >
       <div className="shadow-boxy2 p-5 rounded-2xl bg-white bg-opacity-20">
         <div>
@@ -111,13 +142,13 @@ const App = () => {
           </div>
         </div>
       </div>
-      </motion.div>
+      </div>
       </div>
       
       {/* features */}
     
-      <div className='grid justify-center items-center grid-cols-1 grid-flow-col mt-14 '>
-        <h3 className='text-purple-900 font-serif text-center font-bold text-3xl'>Features That meet your need</h3>
+      <div  className='grid justify-center items-center grid-cols-1 grid-flow-col mt-14 '>
+        <h3 ref={Featuresref} id="Feature" className='text-purple-900 font-serif text-center font-bold text-3xl'>Features That meet your need</h3>
         
       </div>
      
@@ -130,7 +161,7 @@ const App = () => {
       <div className="absolute inset-0  opacity-90" />
 
       {/* Feature Cards */}
-      <div className="relative grid grid-cols-1 sm:grid-cols-2 gap-6 p-4 md:p-8 lg:p-12">
+      <div  className="relative grid grid-cols-1 sm:grid-cols-2 gap-6 p-4 md:p-8 lg:p-12">
         {[
           { title: "Your Data", description: "Easily manage and access your data in one place" },
           { title: "Secure", description: "Top-notch security features to protect your data." },
@@ -139,30 +170,23 @@ const App = () => {
           { title: "Team Collaboration", description: "Collaborate with your team easily and efficiently" },
           { title: "Reports and Analytics", description: "Get detailed reports and analytics of your project." },
         ].map((feature, index) => (
-          <motion.div
+          <div
             key={index}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={floatInFromRight}
-            transition={{ duration: 1 }}
-            className="shadow-lg rounded-xl p-4 bg-white bg-opacity-80"
+          
+            className="shadow-lg float-in-right rounded-xl p-4 bg-white bg-opacity-80"
           >
             <h2 className="text-xl font-bold mb-2">{feature.title}</h2>
             <p>{feature.description}</p>
-          </motion.div>
+          </div>
         ))}
       </div>
     </div>
 
           {/* features2 */}
-          <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={floatInFromRight}
-                transition={{ duration: 1 }}
-                className='grid grid-cols-1 mt-14 pr-28 pl-10 sm:pl-20 sm:pr-28 gap-4'
+          <div
+          id='features'
+          
+                className=' float-in-right grid grid-cols-1 mt-14 pr-28 pl-10 sm:pl-20 sm:pr-28 gap-4'
               >
 <FaTicketAlt className="text-3xl text-purple-900 mb-[-1rem]" />
   <p className='w-40 font-serif '>Create task easily</p>
@@ -172,34 +196,29 @@ const App = () => {
   <p className='flex justify-end text-end w-96 font-serif '> Seamless team collaboration</p>
 
 
-</motion.div>
+</div>
 <br/>
 <br/>
-<Pricing/>
-
-<motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={floatInFromLeft}
-                transition={{ duration: 1 }}
-                className='mt-12 p-6 ml-10 grid grid-flow-row justify-center text-center grid-rows-3'
+<div ref={Pricingref} id='Pricing'>
+<Pricing   />
+</div>
+<div
+                
+                className='float-in-left mt-12 p-6 ml-10 grid grid-flow-row justify-center text-center grid-rows-3'
               >
   <h1 className='text-purple-900 font-bold sm:text-base md:text-xl lg:text-2xl font-serif '>Ready to get started?</h1>
   <p className='font-serif '>Discover the benefits of Sprinty today and start planning and managing your projects.</p>
   <button ref={signbtnRef} className="bg-purple-900 border  text-white border-none rounded-md grid w-24 hover:font-bold hover:bg-purple-950 hover:text-white items-center justify-center lg:ml-64 lg:mt-2 sm:ml-[14rem] md:ml-[16rem] text-danger_light font-sans">Sign in</button>
-  </motion.div>
+  </div>
  
  {/* About us */}
- <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true }}
-      variants={floatInFromRight}
-      transition={{ duration: 1 }}
+ <div
+ ref={Aboutusref}
+ id='About'
+      
      
     
-                className='grid grid-cols-1 grid-flow-row  rounded-2xl p-2 mb-12 ml-3 shadow-boxy'
+                className='down-to-up grid grid-cols-1 grid-flow-row  rounded-2xl p-2 mb-12 ml-3 shadow-boxy'
               >
  <div className='about-us-section mt-1  ml-10 font-bold grid grid-flow-row justify-center text-center '>
               <h1 className='text-purple-900 sm:text-base md:text-xl lg:text-2xl sm:mb[-6rem] font-serif'>About Us</h1>
@@ -215,7 +234,7 @@ const App = () => {
             </div>
            
             
-            </motion.div>
+            </div>
          
       
             </div>  
@@ -241,7 +260,7 @@ const App = () => {
                 viewport={{ once: true }}
                 variants={downToUp}
                 transition={{ duration: 1 }}
-                className="flex items-center gap-4 sm:ml-4"
+                className="down-to-up flex items-center gap-4 sm:ml-4"
               >
   <div className="social-button">
     <button className="relative lg:w-12 lg:h-12 sm:w-8 rounded-full group">
