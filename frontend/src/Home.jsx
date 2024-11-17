@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
-import Navbar from './Components/Navbar';
-import App from './App';
-
+import Navbar from './Components/Ladingpagecomponents/Navbar';
+import App from './Components/Ladingpagecomponents/App';
+import Footer from './Components/Ladingpagecomponents/Footer';
 const Home = () => {
   // Define refs for each section
   const Homeref = useRef(null);
@@ -31,6 +31,9 @@ const Home = () => {
         Pricingref={Pricingref}
         Aboutusref={Aboutusref}
       />
+      
+        {/* <Footer /> */}
+      
     </div>
   );
 };

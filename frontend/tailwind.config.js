@@ -5,6 +5,9 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    textShadow: {
+      'purple': '2px 2px 4px rgba(128, 0, 128, 0.5)', // Purple text shadow
+    },
     screens: {
       'sm': '640px',
       // => @media (min-width: 640px) { ... }

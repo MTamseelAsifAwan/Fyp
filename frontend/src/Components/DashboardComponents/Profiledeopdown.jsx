@@ -1,11 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
 import { signOut, onAuthStateChanged } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom'; 
+import { Link, useNavigate } from 'react-router-dom'; 
 import { FaUserCircle } from 'react-icons/fa';
 
 import { auth } from '../../Auth/Firebase.jsx'; // Adjust the import path to your Firebase config
 
-const ProfileDropdown = () => {
+const ProfileDropdown = ({ closeModalProject }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [userEmail, setUserEmail] = useState(null);
   const dropdownMenuRef = useRef(null);
@@ -56,20 +56,10 @@ const ProfileDropdown = () => {
 
   return (
     <div className="relative">
-      {/* Dropdown Button */}
-      <button 
-        onClick={toggleDropdown} 
-        className="flex justify-center space-x-2 p-2 border border-gray-300 rounded-full bg-purple-900 text-white text-center items-center hover:bg-purple-950"
-      >
-       
-        <span><FaUserCircle className='text-2xl ' /></span>
-      </button>
-
-      {/* Dropdown Menu */}
       {isDropdownOpen && (
         <div 
           ref={dropdownMenuRef} 
-          className="absolute right-0 mt-2 w-72 bg-white border border-gray-300 rounded-lg shadow-lg"
+          className="absolute z-50 bottom-14 left-1  w-[11.2rem] font-serif h-[8.8rem] bg-white bg-blend-multiply border border-gray-300 rounded-lg shadow-lg"
         >
           <div className="flex items-center p-2 border-b border-gray-300">
             <img 
@@ -77,24 +67,36 @@ const ProfileDropdown = () => {
               alt="Profile" 
               className="w-10 h-10 rounded-full" 
             />
-            <span className="ml-2">{userEmail}</span>
+            <span className="ml-2 text-black">{userEmail}</span>
           </div>
-          <div className="py-2">
-            <a href="#settings" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+          <div className="">
+            <Link href="#settings" className="block px-4  text-gray-700 hover:bg-gray-300">
               Settings
-            </a>
-            <a href="#subscription" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+            </Link>
+            
+            <Link href="#subscription" className="block px-4  text-gray-700 hover:bg-gray-300">
               Subscription
-            </a>
-            <button 
+            </Link>
+            <Link href="#subscription" className="block px-4  text-gray-700 hover:bg-gray-300">
+              Teams
+            </Link>
+            <a
               onClick={handleSignOut} 
-              className="block w-full px-4 py-2 text-white bg-purple-900 border border-purple-900 rounded-md hover:bg-red-600 hover:border-red-600"
+              className="block w-full rounded-br-lg rounded-bl-lg mb-6 text-center items-baseline  text-white bg-purple-900 border border-purple-900  hover:bg-red-600 hover:border-red-600"
             >
               Sign Out
-            </button>
+            </a>
           </div>
         </div>
       )}
+
+      {/* Dropdown Button */}
+      <button 
+        onClick={toggleDropdown} 
+        className="flex items-baseline px-5 py-2 mr-8 rounded-r-full w-24 duration-500 ease-in-out  cursor-progress bg-purple-950 text-white mb-4"
+      >
+        <FaUserCircle className="text-3xl" />
+      </button>
     </div>
   );
 };

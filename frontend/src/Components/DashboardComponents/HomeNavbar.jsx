@@ -31,37 +31,10 @@ const HomeNavbar = () => {
   return (
     <div className='bg-white shadow-boxy3 font-serif'>
       <header className="bg-white">
-        <nav className="flex justify-between items-center h-12 w-[92%] mx-auto font-serif">
-          <div className=''>
-            <img src={Logo} alt="Logo" width={150} height={200} />
-          </div>
-          <div
-            className={`nav-links duration-500 md:static absolute bg-white md:min-h-fit min-h-[60vh] left-0 ${menuOpen ? 'top-[6%]' : 'top-[-100%]'} md:w-auto w-full flex items-center px-5`}
-          >
-            {/* <ul className="flex items-center justify-center ml-14 md:flex-row flex-col md:items-center md:gap-[4vw] sm:items-center gap-8">
-              <li>
-                <a className="li-items font-serifc " href="/Dashboard">Home</a>
-              </li>
-              <li>
-                <a className="li-items font-serifc " href="#">Report</a>
-              </li>
-              <li>
-                <a className="li-items font-serifc " href="/Chat">Chat</a>
-              </li>
-              
-            </ul> */}
-          </div>
-          <div className="flex items-center gap-4">
-            <Profiledropdown /> {/* Add the ThemeDropdown component */}
-           
-            {menuOpen ? (
-              <IoClose onClick={onToggleMenu} className="text-3xl cursor-pointer md:hidden" />
-            ) : (
-              <IoMenu onClick={onToggleMenu} className="text-3xl cursor-pointer md:hidden" />
-            )}
-          </div>
-        </nav>
-      </header>
+        <nav className="flex justify-between items-center h-1  w-[92%] mx-auto font-serif">
+          
+         </nav>
+         </header>
     </div>
   );
 }

@@ -1,7 +1,11 @@
+import heroimage from '../Ladingpagecomponents/assets/hero/hero-background.jpg';
 
 const SkeletonLoader = () => {
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 pb-32 space-y-6"
+    style={{ backgroundImage: `url(${heroimage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+
+    >
       <div className="space-y-2">
         <div className="bg-gray-300 h-8 w-2/3 rounded-md animate-pulse"></div>
         <div className="bg-gray-300 h-4 w-1/2 rounded-md animate-pulse"></div>
