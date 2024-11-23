@@ -59,6 +59,16 @@ const Sidebar = ({ onSelect, activeSection }) => {
           Reports
         </li>
         <li
+          onClick={() => onSelect('taks-report')}
+          className={`flex items-baseline border  space-x-2 px-5 mr-8 rounded-r-full duration-500 ease-in-out py-4 cursor-pointer ${
+            activeSection === 'taks-report'
+              ? 'bg-purple-900 text-white'
+              : 'hover:bg-slate-200 hover:text-purple-950'
+          }`}
+        >
+          Tasks
+        </li>
+        <li
           onClick={() => onSelect('setting')}
           className={`flex items-baseline border  space-x-2 px-5 mr-8 rounded-r-full duration-500 ease-in-out py-4 cursor-pointer ${
             activeSection === 'chatroom'

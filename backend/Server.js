@@ -68,6 +68,12 @@ app.get('/api/tasks', async (req, res) => {
   try {
     console.log('TASKS DATA FETCHING');
 
+    const { projectId } = req.query;
+console.log(req.query);
+    if (!projectId) {
+      return res.status(400).json({ error: 'Project ID is required' });
+    }
+
     // Reference to the Realtime Database node where Accesstokendata is stored
     const ref = db.ref('users/Accesstokendata');
 
@@ -81,9 +87,10 @@ app.get('/api/tasks', async (req, res) => {
       const userData = snapshot.val();
       const email = userData.email;
       const accessToken = userData.accessToken;
+      console.log(`Access token: ${accessToken}`);
 
-      // Proceed with Jira API request using email and accessToken
-      const jiraURL = `https://codewolfsol.atlassian.net/rest/api/3/search?jql=project=SCRUM`; // Replace with your Jira instance
+      // Jira API request with projectId in the JQL
+      const jiraURL = `https://codewolfsol.atlassian.net/rest/api/3/search?jql=project=${projectId}`; // Replace with your Jira instance
 
       try {
         const response = await axios.get(jiraURL, {
@@ -110,6 +117,7 @@ app.get('/api/tasks', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
 
 // Start the Express server
 app.listen(PORT, () => {

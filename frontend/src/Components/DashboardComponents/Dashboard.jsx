@@ -11,7 +11,7 @@ import HomeNavbar from './HomeNavbar';
 import Teammembers from './Teammembers';
 import ModalTask from './Models/ModalTask'; // Import the ModalTask component
 import ModalProject from './Models/ModalProject'; // Import the ModalProject component
-import NewTask from './NewTask'; // Import NewTask component directly
+import Tasks from './Tasks.jsx'; // Import Tasks component directly
 import NewProject from './NewProject';
 const Chatroom = lazy(() => import('./Setting.jsx'));
 const Projecthome = lazy(() => import('./Projecthome'));
@@ -150,7 +150,7 @@ useEffect (() => {
     setShowDropdown(false);
   };
 
-  const handleNewTask = () => {
+  const handleTasks = () => {
     setIsModalTaskOpen(true); // Open the modal when "New Task" is clicked
   };
 
@@ -211,111 +211,14 @@ useEffect (() => {
         <Sidebar className="w-1/4" onSelect={handleSelectSection} activeSection={activeSection} />
 
         {/* Main content (75% width) */}
-        <div className="w-9/12 flex-grow  pl-3 pr-3  shadow-2xl  rounded-3xl h-screen mr-2 ml-1 ">
-          {activeSection === 'dashboard' && (
-            <>
-              <h1 className="text-3xl font-bold text-white">Project Details</h1>
-              {selectedProject ? (
-                <div className='text-white'>
-                  <p><span className="font-bold ">Project Name:</span> {selectedProject.name}</p>
-                  <p><span className="font-bold">Project Methodlogy:</span> {selectedProject.key}</p>
-                </div>
-              ) : (
-                <p className='text-white'>Please select a project to see the details.</p>
-              )}
-
-<div className="grid justify-start grid-cols-1 grid-flow-col gap-2 mt-4">
-  {/* Task Info Containers */}
-  <div className="flex w-full mb-4 space-x-4 justify-evenly">
-      {/* Total Tasks */}
-      <div className="flex flex-col items-center h-36 w-48 cursor-pointer transition-all duration-500 hover:translate-y-2 text-white bg-white backdrop-filter backdrop-blur-lg bg-opacity-20 rounded-xl">
-        <FaTasks className="text-4xl text-yellow-500 mb-2" /> {/* Icon */}
-        <span className="text-lg font-semibold">Total Tasks</span>
-        <span className="text-3xl font-bold text-green-600 m-6">{totalTasks}</span>
-      </div>
-
-      {/* To Do Tasks */}
-      <div className="flex flex-col items-center h-36 w-48 cursor-pointer transition-all duration-500 hover:translate-y-2 text-white bg-white backdrop-filter backdrop-blur-lg bg-opacity-20 rounded-xl">
-        <FaClipboardList className="text-4xl text-yellow-500 mb-2" /> {/* Icon */}
-        <span className="text-lg font-semibold">To Do Tasks</span>
-        <span className="text-3xl font-bold text-green-600 m-6">{totaltodo}</span>
-      </div>
-
-      {/* In Progress Tasks */}
-      <div className="flex flex-col items-center h-36 w-48 cursor-pointer transition-all duration-500 hover:translate-y-2 text-white bg-white backdrop-filter backdrop-blur-lg bg-opacity-20 rounded-xl">
-        <FaHourglassStart  className="text-4xl text-yellow-500 mb-2 animate-spin" /> {/* Icon */}
-        <span className="text-lg font-semibold">In Progress Tasks</span>
-        <span className="text-3xl font-bold text-green-600 m-6">{totalinprogress}</span>
-      </div>
-
-      {/* Done Tasks */}
-      <div className="flex flex-col items-center h-36 w-48 cursor-pointer transition-all duration-500 hover:translate-y-2 text-white bg-white backdrop-filter backdrop-blur-lg bg-opacity-20 rounded-xl">
-        <FaCheckCircle className="text-4xl text-yellow-500 mb-2" /> {/* Icon */}
-        <span className="text-lg font-semibold">Done Tasks</span>
-        <span className="text-3xl font-bold text-green-600 m-6">{totaldone}</span>
-      </div>
-    </div>
+        <div className="w-9/12 flex-grow pl-3 pr-3 shadow-2xl rounded-3xl h-screen mr-2 ml-1">
+  {activeSection === 'dashboard' && (
+    <Suspense fallback={<p>Loading...</p>}>
+      <Projecthome projectid={projectId} onSlectedProject={handleProjectSelect} />
+    </Suspense>
+  )}
 
 
-  {/* Dropdown Button */}
-  <div className=''>
-  <button
-    className="flex items-center w-[9rem] pl-2 text-base font-serif text-white bg-purple-900 border-none rounded-md hover:bg-purple-950"
-    onClick={toggleDropdown}
-    ref={btnref}
-  >
-    Select Project
-    {showDropdown ? (
-      <span className="ml-1"><FaCaretUp /></span>
-    ) : (
-      <span className="ml-1"><FaSortDown /></span>
-    )}
-  </button>
-
-  {showDropdown && (
-  <div
-    ref={dropdownMenuRef}
-    className="absolute right-0 mt-8 mr-10 h-28 w-auto p-4 bg-white border border-gray-300 rounded-lg shadow-lg overflow-auto"
-  >
-    <ul className="grid grid-flow-row">
-      {projectData && projectData.length > 0 ? (
-        projectData.map((project) => (
-          <li
-            key={project.id}
-            onClick={() => handleProjectSelect(project)}
-            className="px-4 py-2 text-center bg-gray-100 h-8 m-2 text-gray-900 hover:bg-gray-200 rounded-lg cursor-pointer transition-all ease-in-out duration-150"
-          >
-            {project.name || 'Unnamed Project'}
-          </li>
-        ))
-      ) : (
-        <li className="px-4 py-2 text-center bg-gray-100 h-8 m-2 text-gray-900 animate-pulse">
-          No projects found
-        </li>
-      )}
-    </ul>
-  </div>
-)}
-
-  </div>
-</div>
-
-
-              <Suspense fallback={<p>Loading...</p>}>
-                  <Projecthome projectid={projectId} onSlectedProject={handleProjectSelect} />
-                </Suspense>
-              {isModalTaskOpen && (
-                <ModalTask closeModalTask={closeModalTask}>
-                  <NewTask closeModalTask={closeModalTask} />
-                </ModalTask>
-              )}
-              {isModalProjectOpen && (
-                <ModalProject closeModalProject={closeModalProject}>
-                  <NewProject closeModalProject={closeModalProject} />
-                </ModalProject>
-              )}
-            </>
-          )}
 
           {activeSection === 'teams' && (
             <div>
@@ -377,6 +280,12 @@ useEffect (() => {
               {/* Add reports content here */}
             </div>
           )}
+          {activeSection === 'taks-report' && (
+            <div>
+              <h1 className="text-3xl font-bold text-purple-900">taks-report</h1>
+              <Tasks/>
+            </div>
+          )}
           {activeSection === 'setting' && (
             <div className="overflow-auto h-3/4">
               <Suspense fallback={<p>Loading setting...</p>}>
@@ -385,7 +294,7 @@ useEffect (() => {
             </div>
           )}
         </div>
-      </div>
+      </div>      
     </>
   );
 }

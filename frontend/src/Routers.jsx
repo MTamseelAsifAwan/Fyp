@@ -6,7 +6,7 @@ import SignupForm from './Components/Ladingpagecomponents/Signupform.jsx';
 import LoginForm from './Components/Ladingpagecomponents/Loginform.jsx';
 import SkeletonLoader from './Components/Loader/DashboardSkeleton.jsx';
 import NewProject from './Components/DashboardComponents/NewProject.jsx';
-import NewTask from './Components/DashboardComponents/NewTask.jsx';
+import Tasks from './Components/DashboardComponents/Tasks.jsx';
 const Dashboard = lazy(() => import('./Components/DashboardComponents/Dashboard.jsx'));
 
 const Routers = () => {
@@ -40,7 +40,7 @@ const Routers = () => {
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<SignupForm />} />
         <Route path="/login" element={<LoginForm />} />
-        <Route path="/newtask" element={<NewTask/>} />
+        <Route path="/Tasks" element={<Tasks/>} />
         <Route path="/newproject" element={<NewProject />} />
 
         <Route
