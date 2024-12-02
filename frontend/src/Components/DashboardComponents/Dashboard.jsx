@@ -14,6 +14,7 @@ import ModalProject from './Models/ModalProject'; // Import the ModalProject com
 import Tasks from './Tasks.jsx'; // Import Tasks component directly
 import NewProject from './NewProject';
 const Chatroom = lazy(() => import('./Setting.jsx'));
+import UserProvider  from './context/context.jsx'; // Import the UserProvider component
 const Projecthome = lazy(() => import('./Projecthome'));
 import axios from 'axios'; 
 import { FaTasks, FaClipboardList, FaHourglassStart , FaCheckCircle } from 'react-icons/fa'; // Import icons from react-icons
@@ -214,7 +215,10 @@ useEffect (() => {
         <div className="w-9/12 flex-grow pl-3 pr-3 shadow-2xl rounded-3xl h-screen mr-2 ml-1">
   {activeSection === 'dashboard' && (
     <Suspense fallback={<p>Loading...</p>}>
+      <UserProvider>
       <Projecthome projectid={projectId} onSlectedProject={handleProjectSelect} />
+
+      </UserProvider>
     </Suspense>
   )}
 
@@ -282,8 +286,11 @@ useEffect (() => {
           )}
           {activeSection === 'taks-report' && (
             <div>
-              <h1 className="text-3xl font-bold text-purple-900">taks-report</h1>
+              <h1 className="text-3xl font-bold text-white">Tasks</h1>
+              <UserProvider>
               <Tasks/>
+              </UserProvider>
+             
             </div>
           )}
           {activeSection === 'setting' && (

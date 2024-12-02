@@ -1,33 +1,115 @@
-import React from 'react';
-import { FaTasks } from 'react-icons/fa'; // React Icons
-import { motion } from 'framer-motion'; // Framer Motion
+import { useEffect, useState } from 'react';
+import { FaTasks } from 'react-icons/fa';
+import { motion } from 'framer-motion';
+import axios from 'axios';
 
 const Tasks = () => {
-  const tasksdata = {
-    task1: { title: 'Task 1', description: 'This is a sample task.', status: 'Pending' },
-    task2: { title: 'Task 2', description: 'This is another sample task.', status: 'Completed' },
-    task3: { title: 'Task 3', description: 'This is a third sample task.', status: 'Pending' },
-    task4: { title: 'Task 4', description: 'This is a fourth sample task.', status: 'Completed' },
+  const [storedProjectId, setStoredProjectId] = useState('');
+  const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(true);  // Add loading state
+
+  const fetchTask = async () => {
+    const projectId = localStorage.getItem('selectedProjectId');
+    setStoredProjectId(projectId);
+    try {
+      const response = await axios.get(`http://localhost:4000/api/tasks?projectId=${projectId}`);
+      const issues = response.data.issues;
+      setTasks(issues);
+      setLoading(false);  // Set loading to false once data is fetched
+    } catch (error) {
+      console.error(error);
+      setLoading(false);  // Set loading to false in case of error
+      alert('Failed to fetch tasks. Please try again.');
+    }
   };
 
+  useEffect(() => {
+    fetchTask();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="grid grid-cols-3 gap-10 p-6  ">
+        {/* Skeleton loaders */}
+        <div className="flex flex-col bg-gray-300 rounded-3xl p-4 shadow-lg animate-pulse">
+          <div className="h-6 bg-gray-400 rounded w-3/4 mb-4"></div>
+          <div className="h-4 bg-gray-400 rounded w-1/2 mb-4"></div>
+          <div className="h-10 bg-gray-400 rounded w-full"></div>
+          <div className="h-4 bg-gray-400 rounded w-1/2 mt-2"></div>
+
+        </div>
+        <div className="flex flex-col bg-gray-300 rounded-3xl p-4 shadow-lg animate-pulse">
+          <div className="h-6 bg-gray-400 rounded w-3/4 mb-4"></div>
+          <div className="h-4 bg-gray-400 rounded w-1/2 mb-4"></div>
+          <div className="h-10 bg-gray-400 rounded w-full"></div>
+          <div className="h-4 bg-gray-400 rounded w-1/2 mt-2"></div>
+
+        </div>
+        <div className="flex flex-col bg-gray-300 rounded-3xl p-4 shadow-lg animate-pulse">
+          <div className="h-6 bg-gray-400 rounded w-3/4 mb-4"></div>
+          <div className="h-4 bg-gray-400 rounded w-1/2 mb-4"></div>
+          <div className="h-10 bg-gray-400 rounded w-full"></div>
+          <div className="h-4 bg-gray-400 rounded w-1/2 mt-2"></div>
+
+        </div>
+        <div className="flex flex-col bg-gray-300 rounded-3xl p-4 shadow-lg animate-pulse">
+          <div className="h-6 bg-gray-400 rounded w-3/4 mb-4"></div>
+          <div className="h-4 bg-gray-400 rounded w-1/2 mb-4"></div>
+          <div className="h-10 bg-gray-400 rounded w-full"></div>
+          <div className="h-4 bg-gray-400 rounded w-1/2 mt-2"></div>
+
+        </div>
+        <div className="flex flex-col bg-gray-300 rounded-3xl p-4 shadow-lg animate-pulse">
+          <div className="h-6 bg-gray-400 rounded w-3/4 mb-4"></div>
+          <div className="h-4 bg-gray-400 rounded w-1/2 mb-4"></div>
+          <div className="h-10 bg-gray-400 rounded w-full"></div>
+          <div className="h-4 bg-gray-400 rounded w-1/2 mt-2"></div>
+
+        </div>
+        <div className="flex flex-col bg-gray-300 rounded-3xl p-4 shadow-lg animate-pulse">
+          <div className="h-6 bg-gray-400 rounded w-3/4 mb-4"></div>
+          <div className="h-4 bg-gray-400 rounded w-1/2 mb-4"></div>
+          <div className="h-10 bg-gray-400 rounded w-full"></div>
+          <div className="h-4 bg-gray-400 rounded w-1/2 mt-2"></div>
+
+        </div>
+        <div className="flex flex-col bg-gray-300 rounded-3xl p-4 shadow-lg animate-pulse">
+          <div className="h-6 bg-gray-400 rounded w-3/4 mb-4"></div>
+          <div className="h-4 bg-gray-400 rounded w-1/2 mb-4"></div>
+          <div className="h-10 bg-gray-400 rounded w-full"></div>
+          
+        </div>
+        <div className="flex flex-col bg-gray-300 rounded-3xl p-4 shadow-lg animate-pulse">
+          <div className="h-6 bg-gray-400 rounded w-3/4 mb-4"></div>
+          <div className="h-4 bg-gray-400 rounded w-1/2 mb-4"></div>
+          <div className="h-10 bg-gray-400 rounded w-full"></div>
+        </div>
+        <div className="flex flex-col bg-gray-300 rounded-3xl p-4 shadow-lg animate-pulse">
+          <div className="h-6 bg-gray-400 rounded w-3/4 mb-4"></div>
+          <div className="h-4 bg-gray-400 rounded w-1/2 mb-4"></div>
+          <div className="h-10 bg-gray-400 rounded w-full"></div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="grid grid-cols-3 gap-6 p-6">
-      {Object.entries(tasksdata).map(([key, item]) => (
+    <div className="grid grid-cols-3 gap-6 p-6 overflow-y-scroll h-[92vh]">
+      {Object.entries(tasks).map(([key, item]) => (
         <motion.div
           key={key}
           className="flex flex-col bg-gray-300 rounded-3xl p-4 shadow-lg"
-          whileHover={{ scale: 1.05 }} // Animation for hover
-          whileTap={{ scale: 0.95 }} // Animation for click
-          initial={{ opacity: 0, y: 50 }} // Animation start state
-          animate={{ opacity: 1, y: 0 }} // Animation end state
-          transition={{ duration: 0.1 }} // Animation duration
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.1 }}
         >
           <div className="flex items-center space-x-2">
-            <FaTasks className="text-purple-900 text-2xl" /> {/* Task icon */}
-            <h2 className="text-lg font-medium tracking-tighter text-black">{item.title}</h2>
+            <FaTasks className="text-purple-900 text-2xl" />
+            <h2 className="text-lg font-medium tracking-tighter text-black">{item.fields.summary}</h2>
           </div>
-          <p className="mt-2 text-sm text-black">{item.description}</p>
-          <p className="mt-4 text-sm text-black">Status: {item.status}</p>
+          <p className="mt-4 text-sm text-black">Status: {item.fields.status?.statusCategory?.name}</p>
           <button className="mt-4 w-full px-4 py-2 text-center text-white bg-purple-900 rounded-full hover:bg-purple-950">
             See Details
           </button>

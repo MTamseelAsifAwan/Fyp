@@ -1,6 +1,5 @@
-import React, { useEffect, useState,useRef  } from 'react';
+import React, { useEffect, useState,useRef ,useContext } from 'react';
 import { FaTasks, FaClipboardList, FaHourglassStart, FaCheckCircle, FaCaretUp, FaSortDown } from 'react-icons/fa'; // Import icons
-import MyProjectContext from './context/context'; // Import the context
 import axios from 'axios';
 import {
   ComposedChart,
@@ -17,6 +16,7 @@ import {
 import { PieChart, Pie, Cell, Label } from 'recharts';
 import { toast } from 'react-toastify'; // Import toast from react-toastify
 import 'react-toastify/dist/ReactToastify.css'; // Import toastify styles
+import {UserContext}  from './context/context.jsx'; // Import the UserProvider component
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
@@ -44,7 +44,7 @@ const Projecthome = ({children}) => {
   const [projectData, setProjectData] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
-  
+  const { setContextProjectId } = useContext(UserContext);
   const[selectedProjectname,setSelectedProjectname]=useState(null);
   const [selectedProjectmethodology,setSelectedProjectmethodology]=useState(null);
   const dropdownMenuRef = useRef();
@@ -166,6 +166,8 @@ const Projecthome = ({children}) => {
 
   const handleProjectSelect = (project) => {
     setSelectedProject(project);
+    setContextProjectId('fg'); // Set project ID in context
+    console.log(project.id);
     setSelectedProjectname(project.name); // Set project name directly
     setSelectedProjectmethodology(project.key); // Set methodology directly
     setProjectId(project.id);

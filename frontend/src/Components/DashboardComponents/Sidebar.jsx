@@ -48,16 +48,7 @@ const Sidebar = ({ onSelect, activeSection }) => {
                     Chatroom
 
         </li> */}
-        <li
-          onClick={() => onSelect('reports')}
-          className={`flex items-baseline border  space-x-2 px-5 mr-8 rounded-r-full duration-500 ease-in-out py-4 cursor-pointer ${
-            activeSection === 'reports'
-              ? 'bg-purple-900 text-white'
-              : 'hover:bg-slate-200 hover:text-purple-950'
-          }`}
-        >
-          Reports
-        </li>
+       
         <li
           onClick={() => onSelect('taks-report')}
           className={`flex items-baseline border  space-x-2 px-5 mr-8 rounded-r-full duration-500 ease-in-out py-4 cursor-pointer ${
@@ -67,6 +58,16 @@ const Sidebar = ({ onSelect, activeSection }) => {
           }`}
         >
           Tasks
+        </li>
+        <li
+          onClick={() => onSelect('reports')}
+          className={`flex items-baseline border  space-x-2 px-5 mr-8 rounded-r-full duration-500 ease-in-out py-4 cursor-pointer ${
+            activeSection === 'reports'
+              ? 'bg-purple-900 text-white'
+              : 'hover:bg-slate-200 hover:text-purple-950'
+          }`}
+        >
+          Reports
         </li>
         <li
           onClick={() => onSelect('setting')}

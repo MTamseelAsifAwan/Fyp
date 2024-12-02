@@ -1,6 +1,18 @@
-// context.js
-import React from 'react';
+import React, { createContext, useState } from 'react';
 
-const MyProjectContext = React.createContext();
+// Named export for UserContext
+export const UserContext = createContext();
 
-export default MyProjectContext;
+// Default export for UserProvider
+// eslint-disable-next-line react/prop-types
+const UserProvider = ({ children }) => {
+  const [contextProjectId, setContextProjectId] = useState("");
+
+  return (
+    <UserContext.Provider value={{ contextProjectId, setContextProjectId }}>
+      {children}
+    </UserContext.Provider>
+  );
+};
+
+export default UserProvider;
