@@ -257,7 +257,7 @@ gsap.fromTo(mainbtnRef.current,
     </p>
 
     <FaUsers className='text-3xl text-white ml-[11.5rem]' />
-    <p className='flex justify-end text-end w-96 font-serif text-white'>
+    <p className='flex justify-end text-end w-96 sm:w-[20rem] font-serif text-white'>
       Seamless team collaboration
     </p>
   </div>
